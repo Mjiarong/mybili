@@ -1,6 +1,9 @@
 package serializer
 
-import "mybili/model"
+import (
+	"fmt"
+	"mybili/model"
+)
 
 // Video 视频序列化器
 type Video struct {
@@ -9,7 +12,7 @@ type Video struct {
 	Info      string `json:"info"`
 	URL       string `json:"url"`
 	Avatar    string `json:"avatar"`
-	//View      uint64 `json:"view"`
+	View      uint64 `json:"view"`
 	CreatedAt int64  `json:"created_at"`
 }
 
@@ -19,9 +22,9 @@ func BuildVideo(item model.Video) Video {
 		ID:        item.ID,
 		Title:     item.Title,
 		Info:      item.Info,
-		URL:       item.URL,
-		Avatar:    item.Avatar,
-		//View:      item.View,
+		URL:       item.VideoURL(),
+		Avatar:    item.AvatarURL(),
+		View:      item.View,
 		CreatedAt: item.CreatedAt.Unix(),
 	}
 }
@@ -30,6 +33,8 @@ func BuildVideo(item model.Video) Video {
 func BuildVideos(items []model.Video) (videos []Video) {
 	for _, item := range items {
 		video := BuildVideo(item)
+		fmt.Println("videoCreatedAt:",video.CreatedAt)
+		fmt.Println("itemCreatedAt:",item.CreatedAt)
 		videos = append(videos, video)
 	}
 	return videos

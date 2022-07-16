@@ -20,8 +20,8 @@ func (service *CreateVideoService) Create() serializer.Response {
 	video := model.Video{
 		Title:  service.Title,
 		Info:   service.Info,
-		//URL:    service.URL,
-		//Avatar: service.Avatar,
+		URL:    service.URL,
+		Avatar: service.Avatar,
 	}
 
 	err := model.DB.Create(&video).Error

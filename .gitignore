@@ -1,1 +1,5 @@
+# local exe files
 *.exe
+
+# local env files
+.env
