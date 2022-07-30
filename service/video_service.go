@@ -16,12 +16,13 @@ type CreateVideoService struct {
 }
 
 // Create 创建视频
-func (service *CreateVideoService) Create() serializer.Response {
+func (service *CreateVideoService) Create(user *model.User) serializer.Response {
 	video := model.Video{
 		Title:  service.Title,
 		Info:   service.Info,
 		URL:    service.URL,
 		Avatar: service.Avatar,
+		UserID:user.ID,
 	}
 
 	err := model.DB.Create(&video).Error
@@ -58,7 +59,7 @@ func (service *ShowVideoService) Show(id string) serializer.Response {
 	}
 
 	//处理视频被观看的一系问题
-	//video.AddView()
+	video.AddView()
 
 	return serializer.Response{
 		Data: serializer.BuildVideo(video),

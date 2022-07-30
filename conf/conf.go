@@ -1,11 +1,12 @@
 package conf
 
 import (
+	"github.com/joho/godotenv"
 	"mybili/cache"
 	"mybili/model"
+	"mybili/task"
 	"mybili/util"
 	"os"
-	"github.com/joho/godotenv"
 )
 
 // Init 初始化配置项
@@ -24,4 +25,7 @@ func Init() {
 	// 连接数据库
 	model.Database(os.Getenv("MYSQL_DSN"))
 	cache.Redis()
+
+	//启动定时任务
+	task.CronJob()
 }

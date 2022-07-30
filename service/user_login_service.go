@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"mybili/model"
 	"mybili/serializer"
+	"mybili/util/errmsg"
 )
 
 // UserLoginService 管理用户登录的服务
@@ -26,11 +27,17 @@ func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 	var user model.User
 
 	if err := model.DB.Where("user_name = ?", service.UserName).First(&user).Error; err != nil {
-		return serializer.ParamErr("账号或密码错误", nil)
+		return serializer.Response{
+			Code: errmsg.ACCOUNT_OR_PASSWORD_INCORRECT,
+			Msg:  errmsg.GetErrMsg(errmsg.ACCOUNT_OR_PASSWORD_INCORRECT),
+		}
 	}
 
 	if user.CheckPassword(service.Password) == false {
-		return serializer.ParamErr("账号或密码错误", nil)
+		return serializer.Response{
+			Code: errmsg.ACCOUNT_OR_PASSWORD_INCORRECT,
+			Msg:  errmsg.GetErrMsg(errmsg.ACCOUNT_OR_PASSWORD_INCORRECT),
+		}
 	}
 
 	// 设置session

@@ -1,7 +1,5 @@
 package serializer
 
-import "github.com/gin-gonic/gin"
-
 // Response 基础序列化器
 type Response struct {
 	Code  int         `json:"code"`
@@ -39,35 +37,6 @@ func CheckLogin() Response {
 		Code: CodeCheckLogin,
 		Msg:  "未登录",
 	}
-}
-
-// Err 通用错误处理
-func Err(errCode int, msg string, err error) Response {
-	res := Response{
-		Code: errCode,
-		Msg:  msg,
-	}
-	// 生产环境隐藏底层报错
-	if err != nil && gin.Mode() != gin.ReleaseMode {
-		res.Error = err.Error()
-	}
-	return res
-}
-
-// DBErr 数据库操作失败
-func DBErr(msg string, err error) Response {
-	if msg == "" {
-		msg = "数据库操作失败"
-	}
-	return Err(CodeDBError, msg, err)
-}
-
-// ParamErr 各种参数错误
-func ParamErr(msg string, err error) Response {
-	if msg == "" {
-		msg = "参数错误"
-	}
-	return Err(CodeParamErr, msg, err)
 }
 
 // DataList 基础列表结构

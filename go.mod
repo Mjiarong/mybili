@@ -10,6 +10,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/joho/godotenv v1.3.0
 	github.com/onsi/gomega v1.12.0 // indirect
+	github.com/robfig/cron v1.2.0
 	github.com/tencentyun/cos-go-sdk-v5 v0.7.35
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	gopkg.in/go-playground/validator.v8 v8.18.2
