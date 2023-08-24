@@ -1,11 +1,11 @@
 package task
 
 import (
-	"fmt"
+	"github.com/robfig/cron"
+	"mybili/utils"
 	"reflect"
 	"runtime"
 	"time"
-	"github.com/robfig/cron"
 )
 
 // Cron 定时器单例
@@ -18,9 +18,11 @@ func Run(job func() error) {
 	to := time.Now().UnixNano()
 	jobName := runtime.FuncForPC(reflect.ValueOf(job).Pointer()).Name()
 	if err != nil {
-		fmt.Printf("%s error: %dms\n", jobName, (to-from)/int64(time.Millisecond))
+		//fmt.Printf("%s error: %dms\n", jobName, (to-from)/int64(time.Millisecond))
+		utils.Logger.Infof("%s error: %dms\n", jobName, (to-from)/int64(time.Millisecond))
 	} else {
-		fmt.Printf("%s success: %dms\n", jobName, (to-from)/int64(time.Millisecond))
+		//fmt.Printf("%s success: %dms\n", jobName, (to-from)/int64(time.Millisecond))
+		utils.Logger.Infof("%s success: %dms\n", jobName, (to-from)/int64(time.Millisecond))
 	}
 }
 
@@ -33,5 +35,5 @@ func CronJob() {
 	Cron.AddFunc("0 0 0 * * *", func() { Run(RestartDailyRank) })
 	Cron.Start()
 
-	fmt.Println("Cronjob start.....")
+	utils.Logger.Infoln("Cronjob start.....")
 }

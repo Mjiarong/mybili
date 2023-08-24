@@ -15,3 +15,14 @@ func UploadToken(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// 获取临时秘钥
+func TmpCredentials(c *gin.Context) {
+	service := service.TmpCredentialsService{}
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetCredential()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

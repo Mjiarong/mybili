@@ -8,6 +8,7 @@ type User struct {
 	UserName  string `json:"user_name"`
 	Nickname  string `json:"nickname"`
 	Status    string `json:"status"`
+	AvatarKey string `json:"avatar_key"`
 	Avatar    string `json:"avatar"`
 	CreatedAt int64  `json:"created_at"`
 }
@@ -19,14 +20,17 @@ func BuildUser(user model.User) User {
 		UserName:  user.UserName,
 		Nickname:  user.Nickname,
 		Status:    user.Status,
-		Avatar:    user.Avatar,
+		AvatarKey: user.Avatar,
+		Avatar:    user.AvatarURL(),
 		CreatedAt: user.CreatedAt.Unix(),
 	}
 }
 
 // BuildUserResponse 序列化用户响应
-func BuildUserResponse(user model.User) Response {
+func BuildUserResponse(user model.User, code int, msg string) Response {
 	return Response{
+		Code: code,
 		Data: BuildUser(user),
+		Msg:  msg,
 	}
 }

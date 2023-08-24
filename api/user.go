@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"mybili/serializer"
 	"mybili/service"
-	"mybili/util/errmsg"
+	"mybili/utils"
 )
 
 // UserRegister 用户注册接口
@@ -30,10 +30,10 @@ func UserLogin(c *gin.Context) {
 	}
 }
 
-// UserMe 用户详情
-func UserMe(c *gin.Context) {
-	user := CurrentUser(c)
-	res := serializer.BuildUserResponse(*user)
+// UserInfo 查询用户接口
+func UserInfo(c *gin.Context) {
+	var service service.UserInfoService
+	res := service.GetInfo(c.Param("name"))
 	c.JSON(200, res)
 }
 
@@ -43,7 +43,7 @@ func UserLogout(c *gin.Context) {
 	s.Clear()
 	s.Save()
 	c.JSON(200, serializer.Response{
-		Code: errmsg.SUCCESS,
-		Msg:  errmsg.GetErrMsg(errmsg.SUCCESS),
+		Code: utils.SUCCESS,
+		Msg:  utils.GetErrMsg(utils.SUCCESS),
 	})
 }

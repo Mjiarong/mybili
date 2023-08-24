@@ -5,7 +5,7 @@ import (
 	"mybili/cache"
 	"mybili/model"
 	"mybili/task"
-	"mybili/util"
+	"mybili/utils"
 	"os"
 )
 
@@ -14,13 +14,15 @@ func Init() {
 	// 从本地读取环境变量
 	godotenv.Load()
 
+	// 日志模块
+	utils.Init()
 	// 设置日志级别
-	util.BuildLogger(os.Getenv("LOG_LEVEL"))
+	/*	utils.BuildLogger(os.Getenv("LOG_LEVEL"))
 
-	// 读取翻译文件
-	if err := LoadLocales("conf/locales/zh-cn.yaml"); err != nil {
-		util.Log().Panic("翻译文件加载失败", err)
-	}
+		// 读取翻译文件
+		if err := LoadLocales("conf/locales/zh-cn.yaml"); err != nil {
+			utils.Log().Panic("翻译文件加载失败", err)
+		}*/
 
 	// 连接数据库
 	model.Database(os.Getenv("MYSQL_DSN"))

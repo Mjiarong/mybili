@@ -1,9 +1,21 @@
 package model
 
+import "mybili/utils"
+
 //执行数据迁移
 
 func migration() {
 	// 自动迁移模式
-	_ = DB.AutoMigrate(&User{})
-	_ = DB.AutoMigrate(&Video{})
+	err := DB.AutoMigrate(&User{})
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
+	err = DB.AutoMigrate(&Video{})
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
+	err = DB.AutoMigrate(&Comment{})
+	if err != nil {
+		utils.Logger.Errorln(err)
+	}
 }

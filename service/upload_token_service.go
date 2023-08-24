@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/tencentyun/cos-go-sdk-v5"
 	"mybili/serializer"
+	"mybili/utils"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,9 +15,8 @@ import (
 // UploadTokenService 上传oss token的服务
 type UploadTokenService struct {
 	Filename string `form:"filename" json:"filename"`
-	Type string `form:"type" json:"type"`
+	Type     string `form:"type" json:"type"`
 }
-
 
 // Post 创建签名URL
 func (service *UploadTokenService) Post() serializer.Response {
@@ -35,35 +35,44 @@ func (service *UploadTokenService) Post() serializer.Response {
 	ak := os.Getenv("SECRET_ID")
 	sk := os.Getenv("SECRET_KEY")
 
-	name := service.Type+"/"+ uuid.Must(uuid.NewRandom()).String()+"-"+ service.Filename
+	name := service.Type + "/" + uuid.Must(uuid.NewRandom()).String() + "-" + service.Filename
 	ctx := context.Background()
 
 	// 获取预签名上传URL
 	presignedPutURL, err := client.Object.GetPresignedURL(ctx, http.MethodPut, name, ak, sk, time.Hour, nil)
 	if err != nil {
-		panic(err)
+		utils.Logger.Errorln(err)
+		return serializer.Response{
+			Code: utils.ERROR_GET_PRESIGNED_URL_FAILED,
+			Msg:  utils.GetErrMsg(utils.ERROR_GET_PRESIGNED_URL_FAILED),
+		}
 	}
 
 	// 获取预签名下载URL
 	presignedGetURL, err := client.Object.GetPresignedURL(ctx, http.MethodGet, name, ak, sk, time.Hour, nil)
 	if err != nil {
-		panic(err)
+		utils.Logger.Errorln(err)
+		return serializer.Response{
+			Code: utils.ERROR_GET_PRESIGNED_URL_FAILED,
+			Msg:  utils.GetErrMsg(utils.ERROR_GET_PRESIGNED_URL_FAILED),
+		}
 	}
 	/*
-	// 2. 通过预签名方式上传对象
-	data := "test upload with presignedURL"
-	f:= strings.NewReader(data)
-	_, err = http.NewRequest(http.MethodPut, presignedURL.String(), f)
-	if err != nil {
-		panic(err)
-	}*/
+		// 2. 通过预签名方式上传对象
+		data := "test upload with presignedURL"
+		f:= strings.NewReader(data)
+		_, err = http.NewRequest(http.MethodPut, presignedURL.String(), f)
+		if err != nil {
+			panic(err)
+		}*/
 
 	return serializer.Response{
 		Data: map[string]string{
-		"key": name,
-		"signedPutURL": presignedPutURL.String(),
-		"signedGetURL": presignedGetURL.String(),
+			"key":          name,
+			"signedPutURL": presignedPutURL.String(),
+			"signedGetURL": presignedGetURL.String(),
 		},
+		Code: utils.SUCCESS,
+		Msg:  utils.GetErrMsg(utils.SUCCESS),
 	}
 }
-

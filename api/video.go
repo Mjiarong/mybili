@@ -7,10 +7,11 @@ import (
 
 // CreateVideo 视频投稿
 func CreateVideo(c *gin.Context) {
-	user:=CurrentUser(c)
+	//username, ok := CurrentUser(c)
+	//user, _ := model.GetUserByName(username)
 	service := service.CreateVideoService{}
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.Create(user)
+		res := service.Create()
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
@@ -35,6 +36,13 @@ func ListVideo(c *gin.Context) {
 	}
 }
 
+// ListVideo 根据用户名查询视频列表接口
+func ListVideosOfUser(c *gin.Context) {
+	service := service.ListVideoService{}
+	res := service.ListByUser(c.Param("username"))
+	c.JSON(200, res)
+}
+
 // UpdateVideo 更新视频的接口
 func UpdateVideo(c *gin.Context) {
 	service := service.UpdateVideoService{}
@@ -51,4 +59,27 @@ func DeleteVideo(c *gin.Context) {
 	service := service.DeleteVideoService{}
 	res := service.Delete(c.Param("id"))
 	c.JSON(200, res)
+}
+
+func AddVideoLikes(c *gin.Context) {
+	service := service.VideoInfoService{}
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AddLikes()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// QueryPlayInfo 查询用户视频点赞、收藏等操作信息
+func QueryPlayInfo(c *gin.Context) {
+	service := service.VideoInfoService{}
+	//ShouldBind
+	//如果是 GET 请求，只使用 Form 绑定引擎（query）。
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.QueryInfo()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
 }
