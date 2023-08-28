@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"mybili/service"
+	"net/http"
 )
 
 // UploadToken 上传授权
@@ -12,7 +13,7 @@ func UploadToken(c *gin.Context) {
 		res := service.Post()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -23,6 +24,6 @@ func TmpCredentials(c *gin.Context) {
 		res := service.GetCredential()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }

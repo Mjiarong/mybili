@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"mybili/service"
+	"net/http"
 )
 
 // CreateVideo 视频投稿
@@ -14,7 +15,7 @@ func CreateVideo(c *gin.Context) {
 		res := service.Create()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -32,7 +33,7 @@ func ListVideo(c *gin.Context) {
 		res := service.List()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -50,7 +51,7 @@ func UpdateVideo(c *gin.Context) {
 		res := service.Update(c.Param("id"))
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -67,7 +68,7 @@ func AddVideoLikes(c *gin.Context) {
 		res := service.AddLikes()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -80,6 +81,6 @@ func QueryPlayInfo(c *gin.Context) {
 		res := service.QueryInfo()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }

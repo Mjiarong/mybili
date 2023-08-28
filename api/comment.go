@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"mybili/service"
+	"net/http"
 )
 
 func CreateComment(c *gin.Context) {
@@ -11,7 +12,7 @@ func CreateComment(c *gin.Context) {
 		res := service.Create()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -22,7 +23,7 @@ func ListComment(c *gin.Context) {
 		res := service.List()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -32,7 +33,7 @@ func DeleteComments(c *gin.Context) {
 		res := service.Delete(service.CommentID)
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -43,7 +44,7 @@ func AddCommentLikes(c *gin.Context) {
 		res := service.AddLikes()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
 
@@ -54,6 +55,6 @@ func AddCommentDislikes(c *gin.Context) {
 		res := service.AddDislikes()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }

@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"mybili/service"
+	"net/http"
 )
 
 // DailyRank 每日排行
@@ -12,6 +13,6 @@ func DailyRank(c *gin.Context) {
 		res := service.Get()
 		c.JSON(200, res)
 	} else {
-		c.JSON(200, ErrorResponse(err))
+		c.AbortWithStatusJSON(http.StatusInternalServerError, ErrorResponse(err))
 	}
 }
