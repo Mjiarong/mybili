@@ -25,6 +25,7 @@ func Database(connString string) {
 		},
 	)
 
+	utils.Logger.Info(connString)
 	db, err := gorm.Open(mysql.Open(connString), &gorm.Config{
 		Logger: newLogger,
 		NamingStrategy: schema.NamingStrategy{

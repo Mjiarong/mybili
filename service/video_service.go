@@ -211,6 +211,35 @@ func (service *DeleteVideoService) Delete(id string) serializer.Response {
 		}
 	}
 
+	var comments []model.Comment //查询视频相关的评论
+	db := model.DB.Where("video_id = ?", videoID).Find(&comments)
+	if err = db.Error; err != nil {
+		return serializer.Response{
+			Code:  utils.ERROR_VIDEO_DELETE_FAILED,
+			Msg:   utils.GetErrMsg(utils.ERROR_VIDEO_DELETE_FAILED),
+			Error: err.Error(),
+		}
+	}
+
+	if db.RowsAffected > 0 { //删除视频相关的评论(如果有的话)
+		//删除相关评论的redis数据库数据
+		for _, comment := range comments {
+			if comment.ParentId == 0 { //找出根评论，删除根评论及其子评论
+				ser := DeleteCommentService{}
+				ser.Delete(comment.ID)
+			}
+		}
+
+		db = model.DB.Where("video_id = ?", videoID).Delete(&model.Comment{})
+		if err = db.Error; err != nil {
+			return serializer.Response{
+				Code:  utils.ERROR_VIDEO_DELETE_FAILED,
+				Msg:   utils.GetErrMsg(utils.ERROR_VIDEO_DELETE_FAILED),
+				Error: err.Error(),
+			}
+		}
+	}
+
 	//删除redis数据库相关的数据
 	//删除视频的播放量数据
 	video.DeletedVideoViewNum(videoID)
@@ -239,35 +268,6 @@ func (service *DeleteVideoService) Delete(id string) serializer.Response {
 			Code:  utils.REDIS_OPERATE_FAILED,
 			Msg:   utils.GetErrMsg(utils.REDIS_OPERATE_FAILED),
 			Error: err.Error(),
-		}
-	}
-
-	var comments []model.Comment //查询视频相关的评论
-	db := model.DB.Where("video_id = ?", videoID).Find(&comments)
-	if err = db.Error; err != nil {
-		return serializer.Response{
-			Code:  utils.ERROR_VIDEO_DELETE_FAILED,
-			Msg:   utils.GetErrMsg(utils.ERROR_VIDEO_DELETE_FAILED),
-			Error: err.Error(),
-		}
-	}
-
-	if db.RowsAffected > 0 { //删除视频相关的评论(如果有的话)
-		//删除相关评论的redis数据库数据
-		for _, comment := range comments {
-			if comment.ParentId == 0 { //找出根评论，删除根评论及其子评论
-				ser := DeleteCommentService{}
-				ser.Delete(comment.ID)
-			}
-		}
-
-		db = model.DB.Where("video_id = ?", videoID).Delete(&model.Comment{})
-		if err = db.Error; err != nil {
-			return serializer.Response{
-				Code:  utils.ERROR_VIDEO_DELETE_FAILED,
-				Msg:   utils.GetErrMsg(utils.ERROR_VIDEO_DELETE_FAILED),
-				Error: err.Error(),
-			}
 		}
 	}
 
