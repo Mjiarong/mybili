@@ -33,3 +33,22 @@ gin+vue 全栈制作一个视频网站。
 │  └─router.go // 路由入口     
 └─utils // 项目公用工具库      
 ```
+
+### 前端源码
+仓库地址:https://github.com/Mjiarong/mybiliweb
+```shell      
+├─docker //容器部署
+│   ├─Dockerfile
+│   ├─default.conf //nginx配置文件
+│   ├─nginx.conf //nginx配置文件
+│   └─docker-compose.yml
+│   
+├─public 
+│ └─index.html  //打包目标文件
+├─src // vue工程源文件
+├─jbabel.config.js
+├─jsconfig.json 
+├─package.json  
+│─package-lock.json  
+└─vue-config.json
+```
