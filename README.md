@@ -52,3 +52,30 @@ gin+vue 全栈制作一个视频网站。
 │─package-lock.json  
 └─vue-config.json
 ```
+## 实现功能
+
+1.  主页视频展示
+2.  视频播放
+3.  视频上传功能
+4.  用户登录与用户注册
+5.  用户后台管理视频
+
+
+## 技术栈
+
+- 后端
+  - Golang
+  - Gin web framework
+  - gorm
+  - jwt-go
+  - 日志框架:ogrus+lfshook+file-rotatelogs
+  - gin-contrib/cors
+- 前端
+  - MVVM框架:vue 2.x
+  - vue router
+  - ui框架:ElementUI
+  - axios
+- 数据库
+  - MySQL
+  - redis
+
