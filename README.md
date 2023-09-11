@@ -145,7 +145,7 @@ $ mkdir -p mybili-project
 $ cd mybili-project/compose
 $ docker compose up -d
 ```
- - 文件目录树
+- 文件目录树
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/dir-tree.png)
 
 
@@ -185,5 +185,4 @@ $ systemctl start nginx
 $ systemctl enable nginx
 ```
 ### 五、项目运行架构
-- 项目架构图
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/jiagou.jpg)
