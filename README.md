@@ -158,7 +158,6 @@ $ cd /etc/nginx/conf.d/
 $ vi mybili.conf
 
 #输入以下内容，保存
-```mybili.conf
 server {
         #服务监听端口
         listen       80;
@@ -177,7 +176,7 @@ server {
             proxy_pass http://127.0.0.1:3000;
         }
 }
-```
+
 #启动Nginx,并设置开启自启动
 $ systemctl start nginx
 $ systemctl enable nginx
