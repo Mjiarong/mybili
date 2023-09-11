@@ -111,3 +111,20 @@ $ docker build -t mybili:v1 .
 # 将镜像推送到镜像仓库，这里以阿里云镜像仓库为例
 $ docker tag mybili:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili:v1
 $ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili:v1
+```
+
+### 二、创建前端项目镜像
+```shell
+#首先拉取项目仓库代码到你的机器上
+$ git clone https://github.com/Mjiarong/mybiliweb)https://github.com/Mjiarong/mybili
+
+#进入项目主目录下的docker目录，把vue打包生成的dist文件夹copy到当前目录下
+$ cd ./docker.
+$ cp -r ../dist ./
+
+#执行docker build指令，生成docker镜像
+$ docker build -t mybili-vue:v1 . 
+
+# 将镜像推送到镜像仓库，这里以阿里云镜像仓库为例
+$ docker tag mybili:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
+$ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
