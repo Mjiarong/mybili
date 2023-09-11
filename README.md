@@ -185,4 +185,5 @@ $ systemctl start nginx
 $ systemctl enable nginx
 ```
 ### 五、项目运行架构
+- 项目架构图
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/jiagou.png)
