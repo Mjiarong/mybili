@@ -141,6 +141,9 @@ $ mkdir -p mybili-project
 #将你修改好的redis.conf文件放到mybili-project/redis文件夹下,作挂载使用
 #将前端工程目录mybiliweb/docker下的nginx.conf文件和default.conf文件复制到mybili-project/nginx文件夹下,作挂载使用
 #将前端工程目录mybiliweb/docker下的docker-compose.yml复制到mybili-project/compose文件夹下
+ - 文件目录树
+  ![](https://github.com/Mjiarong/mybili/blob/main/preview/dir-tree.png)
+
 #进入mybili-project/compose目录，执行docker-compose.yml文件启动工程
 $ cd mybili-project/compose
 $ docker compose up -d
