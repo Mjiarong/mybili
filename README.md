@@ -82,7 +82,7 @@ gin+vue 全栈制作一个视频网站。
 ## 项目预览
 
 - 前端展示页面
-  [![](https://github.com/Mjiarong/ginblog/blob/main/upload/front1.jpg)](https://github.com/Mjiarong/mybili/blob/main/preview/main.jpg)
+  (https://github.com/Mjiarong/mybili/blob/main/preview/main.jpg)
 
 - 前端展示页面
   ![](https://github.com/Mjiarong/ginblog/blob/main/upload/front2.png)
