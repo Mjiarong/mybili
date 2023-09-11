@@ -89,12 +89,12 @@ gin+vue 全栈制作一个视频网站。
 
 - 视频评论页面
 
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/comment.png)
+  ![](https://github.com/Mjiarong/mybili/blob/main/preview/comment.jpg)
 
 - 投稿页面
 
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/upload.png)
+ ![](https://github.com/Mjiarong/mybili/blob/main/preview/upload.jpg)
 
  - 个人视频管理页面
 
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/edit.png)
+  ![](https://github.com/Mjiarong/mybili/blob/main/preview/edit.jpg)
