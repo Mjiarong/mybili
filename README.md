@@ -8,7 +8,7 @@ gin+vue 全栈制作一个视频网站。
 网站整体功能模仿B站设计和制作，仅作为学习交流使用。
 
 网站链接，欢迎访问交流！
-[mybili](http://www.mybili.fun"进来看看吧！")
+[mybili](http://www.mybili.fun)
 
 ## 目录结构
 ### 后端源码
