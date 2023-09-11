@@ -81,16 +81,20 @@ gin+vue 全栈制作一个视频网站。
 
 ## 项目预览
 
-- 前端展示页面
+- 主页
   ![](https://github.com/Mjiarong/mybili/blob/main/preview/main.jpg)
 
-- 前端展示页面
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/front2.png)
+- 视频播放页面
+  ![](https://github.com/Mjiarong/mybili/blob/main/preview/video.jpg)
 
-- 后台登录页面
+- 视频评论页面
 
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/admin1.png)
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/comment.png)
 
-- 后台管理页面
+- 投稿页面
 
-  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/admin2.png)
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/upload.png)
+
+ - 个人视频管理页面
+
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/edit.png)
