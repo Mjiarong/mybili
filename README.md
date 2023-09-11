@@ -98,3 +98,16 @@ gin+vue 全栈制作一个视频网站。
  - 个人视频管理页面
 
   ![](https://github.com/Mjiarong/mybili/blob/main/preview/edit.jpg)
+
+##  Docker部署
+### 一、创建后端项目镜像
+```shell
+#首先拉取项目仓库代码到你的机器上
+$ git clone https://github.com/Mjiarong/mybili)https://github.com/Mjiarong/mybili
+
+#进入项目主目录，执行docker build指令，生成docker镜像
+$ docker build -t mybili:v1 .
+
+# 将镜像推送到镜像仓库，这里以阿里云镜像仓库为例
+$ docker tag mybili:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili:v1
+$ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili:v1
