@@ -116,7 +116,7 @@ $ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili:v1
 ### 二、创建前端项目镜像
 ```shell
 #首先拉取项目仓库代码到你的机器上
-$ git clone https://github.com/Mjiarong/mybiliweb)https://github.com/Mjiarong/mybili
+$ git clone https://github.com/Mjiarong/mybiliweb)https://github.com/Mjiarong/mybiliweb
 
 #进入项目主目录下的docker目录，把vue打包生成的dist文件夹copy到当前目录下
 $ cd ./docker.
@@ -128,3 +128,57 @@ $ docker build -t mybili-vue:v1 .
 # 将镜像推送到镜像仓库，这里以阿里云镜像仓库为例
 $ docker tag mybili:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
 $ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
+```
+
+### 三、使用docker-compose启动工程
+```shell
+#首先在服务器/usr目录下创建一个文件夹mybili-project
+$ cd /usr
+$ mkdir -p mybili-project
+
+#进入mybili-project文件夹，创建三个文件夹，分别名为compose  nginx  redis
+#进入mybili-project/nginx文件夹,继续创建conf文件夹
+#将你修改好的redis.conf文件放到mybili-project/redis文件夹下,作挂载使用
+#将前端工程目录mybiliweb/docker下的nginx.conf文件和default.conf文件复制到mybili-project/nginx文件夹下,作挂载使用
+#将前端工程目录mybiliweb/docker下的docker-compose.yml复制到mybili-project/compose文件夹下
+#进入mybili-project/compose目录，执行docker-compose.yml文件启动工程
+$ cd mybili-project/compose
+$ docker compose up -d
+```
+
+### 四、在服务器上安装nginx
+```shell
+#配置Centos 7 Nginx Yum源仓库，安装Nginx
+$ rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+$ yum install nginx -y
+
+#注释掉/etc/nginx/nginx.conf 中的server默认配置
+#创建自己的配置文件
+$ cd /etc/nginx/conf.d/
+$ vi mybili.conf
+
+#输入以下内容，保存
+```mybili.conf
+server {
+        #服务监听端口
+        listen       80;
+        #域名
+        server_name  mybili.fun;
+        #请求的地址
+        location / {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://127.0.0.1:3001;
+        }
+
+        location /api {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://127.0.0.1:3000;
+        }
+}
+```
+#启动Nginx,并设置开启自启动
+$ systemctl start nginx
+$ systemctl enable nginx
+```
