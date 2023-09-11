@@ -79,3 +79,18 @@ gin+vue 全栈制作一个视频网站。
   - MySQL
   - redis
 
+## 项目预览
+
+- 前端展示页面
+  [![](https://github.com/Mjiarong/ginblog/blob/main/upload/front1.jpg)](https://github.com/Mjiarong/mybili/blob/main/preview/main.jpg)
+
+- 前端展示页面
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/front2.png)
+
+- 后台登录页面
+
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/admin1.png)
+
+- 后台管理页面
+
+  ![](https://github.com/Mjiarong/ginblog/blob/main/upload/admin2.png)
