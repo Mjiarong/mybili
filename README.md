@@ -7,6 +7,9 @@ gin+vue 全栈制作一个视频网站。
 
 网站整体功能模仿B站设计和制作，仅作为学习交流使用。
 
+网站链接，欢迎访问交流！
+[mybili](http://www.mybili.fun)
+
 ## 目录结构
 ### 后端源码
 ```shell
@@ -145,6 +148,9 @@ $ mkdir -p mybili-project
 $ cd mybili-project/compose
 $ docker compose up -d
 ```
+- 文件目录树
+![](https://github.com/Mjiarong/mybili/blob/main/preview/dir-tree.png)
+
 
 ### 四、在服务器上安装nginx
 ```shell
@@ -153,6 +159,73 @@ $ rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7
 $ yum install nginx -y
 
 #注释掉/etc/nginx/nginx.conf 中的server默认配置
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+#    server {
+#        listen       80;
+#        listen       [::]:80;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#       error_page 404 /404.html;
+#       location = /404.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#        location = /50x.html {
+#        }
+#    }
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2;
+#        listen       [::]:443 ssl http2;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+
 #创建自己的配置文件
 $ cd /etc/nginx/conf.d/
 $ vi mybili.conf
@@ -181,3 +254,5 @@ server {
 $ systemctl start nginx
 $ systemctl enable nginx
 ```
+### 五、项目运行架构
+![](https://github.com/Mjiarong/mybili/blob/main/preview/jiagou.jpg)
