@@ -129,7 +129,7 @@ $ cp -r ../dist ./
 $ docker build -t mybili-vue:v1 . 
 
 # 将镜像推送到镜像仓库，这里以阿里云镜像仓库为例
-$ docker tag mybili:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
+$ docker tag mybili-vue:v1 registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
 $ docker push registry.cn-guangzhou.aliyuncs.com/yourname/mybili-vue:v1
 ```
 
