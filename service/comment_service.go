@@ -11,7 +11,7 @@ import (
 type CreateCommentService struct {
 	//结构体成员必须以大写开头
 	Content       string `form:"content" json:"content" binding:"required,max=300"`
-	UserId        uint   `form:"user_id" json:"user_id"  binding:"required"`
+	UserID        uint   `form:"user_id" json:"user_id"  binding:"required"`
 	UserName      string `form:"user_name" json:"user_name"  binding:"required"`
 	Nickname      string `form:"nickname" json:"nickname"  binding:"required"`
 	UserAvatarKey string `form:"user_avatar_key" json:"user_avatar_key"`
@@ -24,11 +24,11 @@ type CreateCommentService struct {
 func (service *CreateCommentService) Create() serializer.Response {
 	comment := model.Comment{
 		Content:       service.Content,
-		UserId:        service.UserId,
+		UserID:        service.UserID,
 		UserName:      service.UserName,
 		Nickname:      service.Nickname,
 		UserAvatarKey: service.UserAvatarKey,
-		VideoId:       service.VideoId,
+		VideoID:       service.VideoId,
 		ParentId:      service.ParentId,
 		ReplyUserName: service.ReplyUserName,
 	}

@@ -28,11 +28,11 @@ func BuildComment(item model.Comment) Comment {
 	return Comment{
 		ID:            item.ID,
 		Content:       item.Content,
-		UserId:        item.UserId,
+		UserId:        item.UserID,
 		UserName:      item.UserName,
 		Nickname:      item.Nickname,
 		UserAvatarUrl: item.AvatarURL(),
-		VideoId:       item.VideoId,
+		VideoId:       item.VideoID,
 		ParentId:      item.ParentId,
 		ReplyUserName: item.ReplyUserName,
 		CreatedAt:     item.CreatedAt.Unix(),

@@ -31,6 +31,8 @@ func Database(connString string) {
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, // use singular table name, table for `User` would be `user` with this option enabled
 		},
+		//禁用AutoMigrate时的自动创建数据库外键约束
+		//DisableForeignKeyConstraintWhenMigrating: true,
 	})
 	// Error
 	if connString == "" || err != nil {

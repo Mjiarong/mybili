@@ -12,25 +12,27 @@ import (
 	"time"
 )
 
+type Status string
+
 // User 用户模型
 type User struct {
 	gorm.Model
-	UserName       string
-	PasswordDigest string
-	Nickname       string
-	Status         string
-	Avatar         string `gorm:"size:1000"`
+	UserName       string `gorm:"size:30;not null;unique"`
+	PasswordDigest string `gorm:"size:256;not null"`
+	Nickname       string `gorm:"size:30;not null"`
+	Status         Status `gorm:"type:enum('active','inactive','suspend')"`
+	Avatar         string `gorm:"size:256;not null"`
 }
 
 const (
 	// PassWordCost 密码加密难度
 	PassWordCost = 12
 	// Active 激活用户
-	Active string = "active"
+	Active Status = "active"
 	// Inactive 未激活用户
-	Inactive string = "inactive"
+	Inactive Status = "inactive"
 	// Suspend 被封禁用户
-	Suspend string = "suspend"
+	Suspend Status = "suspend"
 )
 
 // GetUser 用ID获取用户

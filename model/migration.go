@@ -6,15 +6,15 @@ import "mybili/utils"
 
 func migration() {
 	// 自动迁移模式
-	err := DB.AutoMigrate(&User{})
+	err := DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}
-	err = DB.AutoMigrate(&Video{})
+	err = DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Video{})
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}
-	err = DB.AutoMigrate(&Comment{})
+	err = DB.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Comment{})
 	if err != nil {
 		utils.Logger.Errorln(err)
 	}

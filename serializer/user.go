@@ -4,13 +4,13 @@ import "mybili/model"
 
 // User 用户序列化器
 type User struct {
-	ID        uint   `json:"id"`
-	UserName  string `json:"user_name"`
-	Nickname  string `json:"nickname"`
-	Status    string `json:"status"`
-	AvatarKey string `json:"avatar_key"`
-	Avatar    string `json:"avatar"`
-	CreatedAt int64  `json:"created_at"`
+	ID        uint         `json:"id"`
+	UserName  string       `json:"user_name"`
+	Nickname  string       `json:"nickname"`
+	Status    model.Status `json:"status"`
+	AvatarKey string       `json:"avatar_key"`
+	Avatar    string       `json:"avatar"`
+	CreatedAt int64        `json:"created_at"`
 }
 
 // BuildUser 序列化用户

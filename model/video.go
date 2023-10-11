@@ -16,12 +16,12 @@ import (
 // 视频模型
 type Video struct {
 	gorm.Model
-	Title     string
-	Info      string
-	VideoKey  string
-	AvatarKey string
-	Duration  float32
-	Creator   string
+	Title     string  `gorm:"size:80;not null"`
+	Info      string  `gorm:"size:1000"`
+	VideoKey  string  `gorm:"size:256;not null"`
+	AvatarKey string  `gorm:"size:256;not null"`
+	Duration  float32 `gorm:"not null"`
+	Creator   string  `gorm:"size:30;not null"`
 }
 
 // AvatarURL 获取带签名的封面地址

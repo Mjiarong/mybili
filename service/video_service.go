@@ -11,8 +11,8 @@ import (
 
 // CreateVideoService 视频投稿的服务
 type CreateVideoService struct {
-	Title     string  `form:"title" json:"title" binding:"required,min=2,max=100"`
-	Info      string  `form:"info" json:"info" binding:"max=3000"`
+	Title     string  `form:"title" json:"title" binding:"required,min=2,max=30"`
+	Info      string  `form:"info" json:"info" binding:"max=100"`
 	VideoKey  string  `form:"video_key" json:"video_key"`
 	AvatarKey string  `form:"avatar_key" json:"avatar_key"`
 	Duration  float32 `form:"duration" json:"duration"  binding:"required,min=0.0"`

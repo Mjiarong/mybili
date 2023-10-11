@@ -16,14 +16,16 @@ import (
 // 视频评论模型
 type Comment struct {
 	gorm.Model
-	Content       string //评论的内容
-	UserId        uint   //发出该评论用户的id
+	Content       string `gorm:"size:500;not null"` //评论的内容
 	UserName      string //发出该评论用户的名称
 	Nickname      string //发出该评论用户的昵称
 	UserAvatarKey string //发出该评论用户的头像
-	VideoId       uint   //评论所对应的视频的id
 	ParentId      uint   //指向父评论的id,如果不是对评论的回复,那么该值为null
-	ReplyUserName string //该评论@的用户的名称
+	ReplyUserName string `gorm:"size:30"`  //该评论@的用户的名称
+	UserID        uint   `gorm:"not null"` //发出该评论用户的id
+	User          User   //belongs to 会与另一个模型建立了一对一的连接
+	VideoID       uint   `gorm:"not null"` //评论所对应的视频的id
+	Video         Video
 }
 
 // AvatarURL 获取带签名的用户头像地址
@@ -58,7 +60,7 @@ func (com *Comment) AvatarURL() string {
 // AddCommentsNum 视频评论时评论数+1
 func (com *Comment) AddCommentsNum() error {
 	// 增加视频评论数
-	_, err := cache.RedisClient.Incr(cache.VideoCommentKey(com.VideoId)).Result()
+	_, err := cache.RedisClient.Incr(cache.VideoCommentKey(com.VideoID)).Result()
 	if err != nil {
 		utils.Logger.Errorf("err:%v", err)
 	}
@@ -68,7 +70,7 @@ func (com *Comment) AddCommentsNum() error {
 // DecCommentsNum 删除评论时评论数减少
 func (com *Comment) DecVideoCommentsNum(num int64) error {
 	// DecrBy函数，可以指定每次递减多少
-	_, err := cache.RedisClient.DecrBy(cache.VideoCommentKey(com.VideoId), num).Result()
+	_, err := cache.RedisClient.DecrBy(cache.VideoCommentKey(com.VideoID), num).Result()
 	if err != nil {
 		utils.Logger.Errorf("err:%v", err)
 	}
