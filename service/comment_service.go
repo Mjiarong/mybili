@@ -10,11 +10,11 @@ import (
 
 type CreateCommentService struct {
 	//结构体成员必须以大写开头
-	Content       string `form:"content" json:"content" binding:"required,max=300"`
-	UserID        uint   `form:"user_id" json:"user_id"  binding:"required"`
-	UserName      string `form:"user_name" json:"user_name"  binding:"required"`
-	Nickname      string `form:"nickname" json:"nickname"  binding:"required"`
-	UserAvatarKey string `form:"user_avatar_key" json:"user_avatar_key"`
+	Content string `form:"content" json:"content" binding:"required,max=300"`
+	UserID  uint   `form:"user_id" json:"user_id"  binding:"required"`
+	//UserName      string `form:"user_name" json:"user_name"  binding:"required"`
+	//Nickname      string `form:"nickname" json:"nickname"  binding:"required"`
+	//UserAvatarKey string `form:"user_avatar_key" json:"user_avatar_key"`
 	VideoId       uint   `form:"video_id" json:"video_id"  binding:"required"`
 	ParentId      uint   `form:"parent_id" json:"parent_id"`
 	ReplyUserName string `form:"reply_user_name" json:"reply_user_name"`
@@ -23,11 +23,11 @@ type CreateCommentService struct {
 // Create 创建评论
 func (service *CreateCommentService) Create() serializer.Response {
 	comment := model.Comment{
-		Content:       service.Content,
-		UserID:        service.UserID,
-		UserName:      service.UserName,
-		Nickname:      service.Nickname,
-		UserAvatarKey: service.UserAvatarKey,
+		Content: service.Content,
+		UserID:  service.UserID,
+		//UserName:      service.UserName,
+		//Nickname:      service.Nickname,
+		//UserAvatarKey: service.UserAvatarKey,
 		VideoID:       service.VideoId,
 		ParentId:      service.ParentId,
 		ReplyUserName: service.ReplyUserName,
@@ -59,9 +59,24 @@ type ListCommentService struct {
 
 // List 评论列表
 func (service *ListCommentService) List() serializer.Response {
-	comments := []model.Comment{}
+	/*	comments := []model.Comment{}
 
-	if err := model.DB.Where("video_id = ?", service.VideoID).Find(&comments).Error; err != nil {
+		if err := model.DB.Where("video_id = ?", service.VideoID).Find(&comments).Error; err != nil {
+			return serializer.Response{
+				Code:  utils.DB_CONNECT_FAILED,
+				Msg:   utils.GetErrMsg(utils.DB_CONNECT_FAILED),
+				Error: err.Error(),
+			}
+		}
+
+		items, total := serializer.BuildComments(comments, service.UserID)
+
+		return serializer.BuildListResponse(items, total)*/
+
+	comments := []model.DerivedComment{}
+
+	//SELECT c.*,s.user_name,s.nickname,s.avatar FROM `comment`c LEFT OUTER JOIN `user` s ON c.user_id = s.id WHERE c.video_id = service.VideoID;
+	if err := model.DB.Model(&model.Comment{}).Select("comment.*, user.user_name,user.nickname,user.avatar").Joins("left join user on comment.user_id = user.id").Where("comment.video_id = ?", service.VideoID).Scan(&comments).Error; err != nil {
 		return serializer.Response{
 			Code:  utils.DB_CONNECT_FAILED,
 			Msg:   utils.GetErrMsg(utils.DB_CONNECT_FAILED),
@@ -70,8 +85,8 @@ func (service *ListCommentService) List() serializer.Response {
 	}
 
 	items, total := serializer.BuildComments(comments, service.UserID)
-
 	return serializer.BuildListResponse(items, total)
+
 }
 
 // CommentLikesService 评论点赞服务

@@ -13,13 +13,13 @@ import (
 	"time"
 )
 
-// 视频评论模型
+// 视频评论数据库模型
 type Comment struct {
 	gorm.Model
-	Content       string `gorm:"size:500;not null"` //评论的内容
-	UserName      string //发出该评论用户的名称
-	Nickname      string //发出该评论用户的昵称
-	UserAvatarKey string //发出该评论用户的头像
+	Content string `gorm:"size:500;not null"` //评论的内容
+	//UserName      string //发出该评论用户的名称
+	//Nickname      string //发出该评论用户的昵称
+	//UserAvatarKey string //发出该评论用户的头像
 	ParentId      uint   //指向父评论的id,如果不是对评论的回复,那么该值为null
 	ReplyUserName string `gorm:"size:30"`  //该评论@的用户的名称
 	UserID        uint   `gorm:"not null"` //发出该评论用户的id
@@ -28,8 +28,17 @@ type Comment struct {
 	Video         Video
 }
 
+// 用于联合查询
+type DerivedComment struct {
+	//结构体成员必须以大写开头
+	Comment
+	UserName string //发出该评论用户的名称
+	Nickname string //发出该评论用户的昵称
+	Avatar   string //发出该评论用户的头像
+}
+
 // AvatarURL 获取带签名的用户头像地址
-func (com *Comment) AvatarURL() string {
+func (dcom *DerivedComment) AvatarURL() string {
 	u, _ := url.Parse(os.Getenv("BUCKET_ADDR"))
 	b := &cos.BaseURL{BucketURL: u}
 	client := cos.NewClient(b, &http.Client{
@@ -45,7 +54,7 @@ func (com *Comment) AvatarURL() string {
 	ak := os.Getenv("SECRET_ID")
 	sk := os.Getenv("SECRET_KEY")
 
-	name := com.UserAvatarKey
+	name := dcom.Avatar
 	ctx := context.Background()
 
 	// 获取预签名URL
