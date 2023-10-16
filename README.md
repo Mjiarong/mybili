@@ -262,4 +262,6 @@ $ systemctl enable nginx
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/jiagou.jpg)
 
 ### COS存储数据流程
+- 下载：前端每次请求前都需要通过后端获取签名，后端使用固定密钥或临时密钥计算签名返回至前端，前端收到有效预签名URL下载对象。
+- 上传：前端每次请求前都需要通过后端获取签名，后端通过获取临时密钥给到前端，前端计算签名。
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/cos.jpg)
