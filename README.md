@@ -257,5 +257,9 @@ server {
 $ systemctl start nginx
 $ systemctl enable nginx
 ```
-### 五、项目运行架构
+## 项目运行架构
+### 总体架构
 ![](https://github.com/Mjiarong/mybili/blob/main/preview/jiagou.jpg)
+
+### COS存储数据流程
+![](https://github.com/Mjiarong/mybili/blob/main/preview/cos.jpg)
